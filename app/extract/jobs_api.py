@@ -1,5 +1,6 @@
 import requests
 
+
 def fetch_jobs():
     print("Trayendo vacantes desde la API...")
 
