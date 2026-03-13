@@ -1,24 +1,26 @@
 # Remote Jobs Data Pipeline on GCP
 
-Pipeline end-to-end de Data Engineering construido en Google Cloud Platform para extraer vacantes remotas desde una API pública, almacenar datos raw en Cloud Storage, transformar la información y cargarla en BigQuery para análisis.
+End-to-end Data Engineering project built on Google Cloud Platform to extract remote job postings from a public API, store raw data in Cloud Storage, transform it, load it into BigQuery, and materialize an analytical mart for reporting and analysis.
 
-## Objetivo
+## Project goal
 
-Demostrar fundamentos reales de data engineering en un proyecto sencillo pero completo:
+This project was built to demonstrate practical Data Engineering fundamentals in a simple but realistic architecture:
 
-- extracción desde API
-- almacenamiento raw en cloud
-- transformación de datos
-- carga a BigQuery
-- modelado por capas
-- pruebas, linting y CI
-- flujo de trabajo con ramas y pull requests
+- data extraction from a public API
+- raw storage in cloud
+- transformation and standardization
+- loading into BigQuery
+- layered modeling (raw / staging / mart)
+- containerization with Docker
+- orchestration with Cloud Run Jobs
+- scheduled execution with Cloud Scheduler
+- tests, linting, CI, and branching strategy
 
-## Fuente de datos
+## Data source
 
-- API pública de Remotive
+- Remotive public jobs API
 
-## Arquitectura
+## Architecture
 
 ```text
 Remotive API
@@ -32,3 +34,7 @@ Google Cloud Storage (raw layer)
 BigQuery staging (jobs_staging.remote_jobs)
    ↓
 BigQuery mart (jobs_mart.remote_jobs_mart)
+   ↓
+Cloud Run Job
+   ↓
+Cloud Scheduler
