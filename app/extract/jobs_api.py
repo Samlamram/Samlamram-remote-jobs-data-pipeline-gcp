@@ -14,7 +14,7 @@ def fetch_jobs():
 
     jobs_simplified = []
 
-    for job in jobs[:5]:
+    for job in jobs:
         jobs_simplified.append(
             {
                 "id": job["id"],
