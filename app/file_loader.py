@@ -16,6 +16,7 @@ def save_raw_data_to_json(raw_data):
         json.dump(raw_data, file, indent=4, ensure_ascii=False)
 
     print(f"Raw data guardada en {file_path}")
+    return file_path
 
 
 def save_transformed_jobs_to_json(transformed_jobs):
@@ -27,6 +28,7 @@ def save_transformed_jobs_to_json(transformed_jobs):
         json.dump(transformed_jobs, file, indent=4, ensure_ascii=False)
 
     print(f"Data transformada guardada en {file_path}")
+    return file_path
 
 
 def save_summary_to_json(summary_data):
@@ -38,3 +40,4 @@ def save_summary_to_json(summary_data):
         json.dump(summary_data, file, indent=4, ensure_ascii=False)
 
     print(f"Resumen guardado en {file_path}")
+    return file_path

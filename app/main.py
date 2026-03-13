@@ -1,4 +1,4 @@
-from config import PROJECT_NAME
+from config import PROJECT_NAME, ENABLE_GCS_UPLOAD
 from extract.jobs_api import fetch_jobs
 from file_loader import (
     save_raw_data_to_json,
@@ -7,6 +7,7 @@ from file_loader import (
 )
 from transform.transform_jobs import transform_jobs
 from utils.summary import build_summary_data
+from load.gcs_loader import upload_file_to_gcs
 
 
 def main():
@@ -49,9 +50,15 @@ def main():
         print(f"URL: {job['url']}")
         print("-" * 50)
 
-    save_raw_data_to_json(raw_data)
+    raw_file_path = save_raw_data_to_json(raw_data)
     save_transformed_jobs_to_json(transformed_jobs)
     save_summary_to_json(summary_data)
+
+    if ENABLE_GCS_UPLOAD:
+        destination_blob_name = raw_file_path.replace("\\", "/")
+        upload_file_to_gcs(raw_file_path, destination_blob_name)
+    else:
+        print("Upload a GCS deshabilitado en este entorno.")
 
 
 if __name__ == "__main__":
