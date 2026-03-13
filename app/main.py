@@ -1,4 +1,4 @@
-from config import PROJECT_NAME, ENABLE_GCS_UPLOAD
+from config import PROJECT_NAME, ENABLE_GCS_UPLOAD, ENABLE_BQ_LOAD
 from extract.jobs_api import fetch_jobs
 from file_loader import (
     save_raw_data_to_json,
@@ -8,6 +8,13 @@ from file_loader import (
 from transform.transform_jobs import transform_jobs
 from utils.summary import build_summary_data
 from load.gcs_loader import upload_file_to_gcs
+from load.bq_loader import (
+    ensure_table_exists,
+    recreate_temp_table,
+    load_jobs_to_temp_table,
+    merge_temp_into_target,
+    drop_temp_table,
+)
 
 
 def main():
@@ -59,6 +66,15 @@ def main():
         upload_file_to_gcs(raw_file_path, destination_blob_name)
     else:
         print("Upload a GCS deshabilitado en este entorno.")
+    
+    if ENABLE_BQ_LOAD:
+        ensure_table_exists()
+        recreate_temp_table()
+        load_jobs_to_temp_table(transformed_jobs)
+        merge_temp_into_target()
+        drop_temp_table()
+    else:
+        print("Carga a BigQuery deshabilitada en este entorno.")
 
 
 if __name__ == "__main__":
