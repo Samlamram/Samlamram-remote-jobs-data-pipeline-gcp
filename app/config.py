@@ -7,3 +7,4 @@ BQ_DATASET_ID = "jobs_staging"
 BQ_TABLE_ID = "remote_jobs"
 
 ENABLE_GCS_UPLOAD = os.getenv("ENABLE_GCS_UPLOAD", "false").lower() == "true"
+ENABLE_BQ_LOAD = os.getenv("ENABLE_BQ_LOAD", "false").lower() == "true"
