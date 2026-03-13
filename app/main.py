@@ -1,4 +1,4 @@
-from config import PROJECT_NAME
+from config import PROJECT_NAME, ENABLE_GCS_UPLOAD
 from extract.jobs_api import fetch_jobs
 from file_loader import (
     save_raw_data_to_json,
@@ -54,8 +54,11 @@ def main():
     save_transformed_jobs_to_json(transformed_jobs)
     save_summary_to_json(summary_data)
 
-    destination_blob_name = raw_file_path.replace("\\", "/")
-    upload_file_to_gcs(raw_file_path, destination_blob_name)
+    if ENABLE_GCS_UPLOAD:
+        destination_blob_name = raw_file_path.replace("\\", "/")
+        upload_file_to_gcs(raw_file_path, destination_blob_name)
+    else:
+        print("Upload a GCS deshabilitado en este entorno.")
 
 
 if __name__ == "__main__":
