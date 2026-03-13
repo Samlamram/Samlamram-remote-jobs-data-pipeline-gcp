@@ -15,6 +15,7 @@ from load.bq_loader import (
     merge_temp_into_target,
     drop_temp_table,
 )
+from load.bq_sql_runner import run_sql_file
 
 
 def main():
@@ -73,6 +74,7 @@ def main():
         load_jobs_to_temp_table(transformed_jobs)
         merge_temp_into_target()
         drop_temp_table()
+        run_sql_file("sql/marts/remote_jobs_mart.sql")
     else:
         print("Carga a BigQuery deshabilitada en este entorno.")
 
